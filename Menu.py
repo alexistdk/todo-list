@@ -6,7 +6,7 @@ class Menu:
 
     @staticmethod
     def menu_principal():
-        opcion1 = "1. Agregar tarea"
+        opcion1 = "\n1. Agregar tarea"
         opcion2 = "2. Actualizar descripción"
         opcion3 = "3. Eliminar tarea"
         opcion4 = "4. Cambiar estado"
