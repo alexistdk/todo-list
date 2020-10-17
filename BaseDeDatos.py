@@ -39,12 +39,11 @@ class BaseDeDatos(ConectarDDBB):
             db.commit()
 
     @classmethod
-    def cambiar_estado(cls, titulo):
+    def cambiar_estado(cls, id_tarea):
         try:
             db = cls.conexion()
             cursor = db.cursor()
-            actualizar_tarea = "UPDATE Tareas SET completada = %s WHERE titulo = %s"
-            cursor.execute(actualizar_tarea, (1, titulo))
+            cursor.execute(cls.actualizar_estado(), (id_tarea, ))
         except Error:
             print("Error ", Error)
         finally:

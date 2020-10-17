@@ -23,9 +23,9 @@ class Tarea:
 
     @staticmethod
     def cambiar_estado():
-        print("Terminar tarea\n")
-        titulo = input("Título de la tarea: ")
-        BaseDeDatos.cambiar_estado(titulo)
+        print("Actualizar estado\n")
+        id_tarea = input("ID de la tarea: ")
+        BaseDeDatos.cambiar_estado(id_tarea)
 
     @staticmethod
     def eliminar_tarea():

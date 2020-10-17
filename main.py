@@ -1,8 +1,7 @@
-from BaseDeDatos import *
+from ConectarDDBB import *
 from Menu import *
 
 if __name__ == '__main__':
-    BaseDeDatos.conectar_a_ddbb()
-    BaseDeDatos.crear_tabla_tareas()
+    ConectarDDBB.conectar_a_ddbb()
     Menu.menu_principal()
     Menu.elegir_opcion()
