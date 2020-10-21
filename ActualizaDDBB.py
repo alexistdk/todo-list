@@ -2,7 +2,7 @@ from datetime import date
 from ConectarDDBB import *
 
 
-class BaseDeDatos(ConectarDDBB):
+class ActualizaDDBB(ConectarDDBB):
 
     @classmethod
     def crear_tarea(cls, titulo, descripcion):
@@ -82,19 +82,20 @@ class BaseDeDatos(ConectarDDBB):
         try:
             db = cls.conexion()
             cursor = db.cursor()
-            cursor.execute("SELECT RegistrarUsuario(%s, %s, %s)", (nombre_usuario, email, contrasenia))
+            cursor.execute(cls.registrarusuario(), (nombre_usuario, email, contrasenia))
         except Error:
             print("Error", Error)
         finally:
             db.commit()
-            input("Usuario registrado correctamente. Presione una tecla para iniciar sesión")
 
     @classmethod
     def loguear_usuario(cls, nombre_usuario, contrasenia):
         try:
             db = cls.conexion()
             cursor = db.cursor()
-            cursor.execute("SELECT ExisteUsuario(%s, %s)", (nombre_usuario, contrasenia))
+            cursor.execute(cls.existe_usuario(), (nombre_usuario, contrasenia))
             return cursor.fetchone()[0]
         except Error:
             print("Error", Error)
+        finally:
+            db.commit()

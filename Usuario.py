@@ -1,10 +1,10 @@
-from BaseDeDatos import *
+import ActualizaDDBB
 import os
 from getpass import getpass
 from Menu import *
 
 
-class Sesion:
+class Usuario:
 
     @classmethod
     def iniciar_sesion(cls):
@@ -12,8 +12,8 @@ class Sesion:
         print("Iniciar sesión\n")
         nombre_usuario = input("Username: ")
         contrasenia = getpass(prompt="Constraseña: ")
-        existe_usuario = BaseDeDatos.loguear_usuario(nombre_usuario, contrasenia)
-        if existe_usuario:
+        existe_usuario = ActualizaDDBB.ActualizaDDBB.loguear_usuario(nombre_usuario, contrasenia)
+        if existe_usuario == 1:
             print("wawa")
 
     @classmethod
@@ -24,7 +24,9 @@ class Sesion:
         password = getpass(prompt="Contraseña: ")
         password_reingresada = getpass(prompt="Reingrese la contraseña: ")
         if password == password_reingresada:
-            BaseDeDatos.registrar_usuario(username, email, password)
+            ActualizaDDBB.ActualizaDDBB.registrar_usuario(username, email, password)
+            input("Usuario registrado! Toque cualquier tecla para iniciar sesión.")
+            cls.pantalla_principal()
         else:
             input("Las contraseñas no coinciden. Intente nuevamente")
             cls.pantalla_principal()
