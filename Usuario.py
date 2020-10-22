@@ -2,6 +2,7 @@ import ActualizaDDBB
 import os
 from getpass import getpass
 from Menu import *
+from Tarea import *
 
 
 class Usuario:
@@ -12,9 +13,15 @@ class Usuario:
         print("Iniciar sesión\n")
         nombre_usuario = input("Username: ")
         contrasenia = getpass(prompt="Constraseña: ")
-        existe_usuario = ActualizaDDBB.ActualizaDDBB.loguear_usuario(nombre_usuario, contrasenia)
-        if existe_usuario == 1:
-            print("wawa")
+        existe_usuario = ActualizaDDBB.loguear_usuario(nombre_usuario, contrasenia)
+        if existe_usuario:
+            id_usuario = ActualizaDDBB.id_usuario(nombre_usuario)
+            Tarea.usuario_logueado(id_usuario)
+            Menu.menu_principal()
+            Menu.elegir_opcion()
+        else:
+            input("Usuario y/o contraseña incorrecta")
+            cls.pantalla_principal()
 
     @classmethod
     def registrar_usuario(cls):
@@ -24,7 +31,7 @@ class Usuario:
         password = getpass(prompt="Contraseña: ")
         password_reingresada = getpass(prompt="Reingrese la contraseña: ")
         if password == password_reingresada:
-            ActualizaDDBB.ActualizaDDBB.registrar_usuario(username, email, password)
+            ActualizaDDBB.registrar_usuario(username, email, password)
             input("Usuario registrado! Toque cualquier tecla para iniciar sesión.")
             cls.pantalla_principal()
         else:

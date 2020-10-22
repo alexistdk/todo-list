@@ -1,4 +1,4 @@
-from BaseDeDatos import *
+from ActualizaDDBB import *
 
 
 class Tarea:
@@ -8,29 +8,34 @@ class Tarea:
         self.descripcion = descripcion
         self.completa = completa
 
-    @staticmethod
-    def agregar_tarea():
+    usuario_logueado = 0
+
+    @classmethod
+    def usuario_logueado(cls, id_usuario): cls.usuario_logueado = id_usuario
+
+    @classmethod
+    def agregar_tarea(cls):
         print("Agregar tarea\n")
         titulo = input("Título: ")
         descripcion = input("Descripción: ")
-        BaseDeDatos.crear_tarea(titulo, descripcion)
+        ActualizaDDBB.crear_tarea(titulo, descripcion, cls.usuario_logueado)
 
     @staticmethod
     def modificar_tarea():
         print("Modificar tarea\n")
         id_tarea = input("ID de la tarea: ")
-        BaseDeDatos.actualizar_tarea(id_tarea)
+        ActualizaDDBB.actualizar_tarea(id_tarea)
 
     @staticmethod
     def cambiar_estado():
         print("Actualizar estado\n")
         id_tarea = input("ID de la tarea: ")
-        BaseDeDatos.cambiar_estado(id_tarea)
+        ActualizaDDBB.cambiar_estado(id_tarea)
 
     @staticmethod
     def eliminar_tarea():
         id_tarea = input("ID de la tarea que desea eliminar: ")
-        BaseDeDatos.eliminar_tarea(id_tarea)
+        ActualizaDDBB.eliminar_tarea(id_tarea)
 
-    @staticmethod
-    def mostrar_tareas(): BaseDeDatos.listar_tareas()
+    @classmethod
+    def mostrar_tareas(cls): ActualizaDDBB.listar_tareas(cls.usuario_logueado)

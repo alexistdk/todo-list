@@ -5,23 +5,23 @@ from ConectarDDBB import *
 class ActualizaDDBB(ConectarDDBB):
 
     @classmethod
-    def crear_tarea(cls, titulo, descripcion):
+    def crear_tarea(cls, titulo, descripcion, id_usuario):
         try:
             db = cls.conexion()
             cursor = db.cursor()
             fecha = date.today()
-            cursor.execute(cls.insertar_tarea(), (fecha, titulo, descripcion, 0))
+            cursor.execute(cls.insertar_tarea(), (fecha, titulo, descripcion, 0, id_usuario))
         except Error:
             print("Error ", Error)
         finally:
             db.commit()
 
     @classmethod
-    def existe_tarea(cls, titulo):
+    def existe_tarea(cls, titulo, id_usuario):
         try:
             db = cls.conexion()
             cursor = db.cursor()
-            cursor.execute(cls.busca_tarea, titulo)
+            cursor.execute(cls.busca_tarea, titulo, id_usuario)
             return True
         except Error:
             print("Error ", Error)
@@ -50,11 +50,11 @@ class ActualizaDDBB(ConectarDDBB):
             db.commit()
 
     @classmethod
-    def listar_tareas(cls):
+    def listar_tareas(cls, id_usuario):
         try:
             db = cls.conexion()
             cursor = db.cursor()
-            cursor.execute(cls.seleccionar_tareas())
+            cursor.execute(cls.seleccionar_tareas(), (id_usuario, ))
             records = cursor.fetchall()
             print("\nLista de tareas\n ")
             for row in records:
@@ -99,3 +99,13 @@ class ActualizaDDBB(ConectarDDBB):
             print("Error", Error)
         finally:
             db.commit()
+
+    @classmethod
+    def id_usuario(cls, nombre_usuario):
+        try:
+            db = cls.conexion()
+            cursor = db.cursor()
+            cursor.execute(cls.retorna_id_usuario(), (nombre_usuario, ))
+            return cursor.fetchone()[0]
+        except Error:
+            print("Error", Error)
